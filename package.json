@@ -1,15 +1,15 @@
 {
-  "name": "pblproject",
+  "name": "skillforge",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "SkillForge — AI-Powered Smart Learning Platform",
+  "main": "server.js",
   
   
   "scripts": {
-  "start": "node app.js"
+  "start": "node server.js"
 },
-  "keywords": [],
-  "author": "",
+  "keywords": ["learning", "education", "AI", "study-tracker"],
+  "author": "Nandini Singh",
   "license": "ISC",
   "type": "commonjs"
 }
