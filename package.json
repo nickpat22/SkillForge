@@ -3,14 +3,22 @@
   "version": "1.0.0",
   "description": "SkillForge — AI-Powered Smart Learning Platform",
   "main": "server.js",
-  
-  
   "scripts": {
-  "start": "node server.js"
-},
-  "keywords": ["learning", "education", "AI", "study-tracker"],
+    "start": "node server.js"
+  },
+  "keywords": [
+    "learning",
+    "education",
+    "AI",
+    "study-tracker"
+  ],
   "author": "Nandini Singh",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.22.2"
+  }
 }
-

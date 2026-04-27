@@ -86,7 +86,10 @@ export const aiService = {
     const provider = config.provider;
     const key = config.keys[provider];
 
-    if (!key) throw new Error('NO_API_KEY');
+    if (!key) {
+      console.warn("No API Key configured. Defaulting to free Pollinations AI...");
+      return await this._callPollinations(prompt, systemInstruction);
+    }
 
     try {
       if (provider === 'gemini') {
@@ -102,6 +105,10 @@ export const aiService = {
         });
         if (!resp.ok) {
           if (resp.status === 400 || resp.status === 403) throw new Error('INVALID_API_KEY');
+          if (resp.status === 429) {
+             console.warn("Gemini Quota Exceeded. Falling back to free Pollinations AI...");
+             return await this._callPollinations(prompt, systemInstruction);
+          }
           throw new Error(`Gemini Error: ${resp.status}`);
         }
         const data = await resp.json();
@@ -123,6 +130,7 @@ export const aiService = {
         });
         if (!resp.ok) {
           if (resp.status === 401) throw new Error('INVALID_API_KEY');
+          if (resp.status === 429) throw new Error('QUOTA_EXCEEDED');
           throw new Error(`OpenAI Error: ${resp.status}`);
         }
         const data = await resp.json();
@@ -148,14 +156,35 @@ export const aiService = {
         });
         if (!resp.ok) {
           if (resp.status === 401) throw new Error('INVALID_API_KEY');
+          if (resp.status === 429) throw new Error('QUOTA_EXCEEDED');
           throw new Error(`Anthropic Error: ${resp.status}`);
         }
         const data = await resp.json();
         return data.content?.[0]?.text || 'No response generated.';
       }
     } catch (e) {
-      if (e.message.includes('NO_API_KEY') || e.message.includes('INVALID_API_KEY')) throw e;
+      if (e.message.includes('NO_API_KEY') || e.message.includes('INVALID_API_KEY') || e.message.includes('QUOTA_EXCEEDED')) throw e;
       throw new Error(`Failed to contact ${provider}. (${e.message})`);
+    }
+  },
+
+  // Free fallback AI when quota is exceeded
+  async _callPollinations(prompt, systemInstruction) {
+    try {
+      const resp = await fetch('https://text.pollinations.ai/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            { role: 'system', content: systemInstruction },
+            { role: 'user', content: prompt }
+          ]
+        })
+      });
+      if (!resp.ok) throw new Error(`Pollinations Error: ${resp.status}`);
+      return await resp.text();
+    } catch (e) {
+      throw new Error('QUOTA_EXCEEDED'); // If fallback also fails, tell user to update key
     }
   },
 

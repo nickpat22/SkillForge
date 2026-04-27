@@ -90,15 +90,32 @@ window.showPage = function(pageId) {
 };
 
 // Auth functions
-window.handleLogin = () => {
-  const username = document.getElementById('login-username').value.trim();
-  if (!username) { showToast('Please enter a username', 'error'); return; }
-  state.currentUser = username;
-  database.setLocal('currentUser', username);
-  document.getElementById('login-modal').classList.add('hidden');
-  showApp();
-  showToast('Welcome, ' + username + '!', 'success');
-  dashboardPage.refreshDashboard();
+window.handleLogin = async () => {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value.trim();
+  if (!email || !password) { showToast('Please enter email and password', 'error'); return; }
+  
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      state.currentUser = data.user;
+      database.setLocal('currentUser', data.user);
+      document.getElementById('login-modal').classList.add('hidden');
+      await database.syncFromApi();
+      showApp();
+      showToast('Welcome, ' + data.user.name + '!', 'success');
+      dashboardPage.refreshDashboard();
+    } else {
+      showToast(data.error || 'Login failed', 'error');
+    }
+  } catch (err) {
+    showToast('Network error during login', 'error');
+  }
 };
 
 window.logout = () => {
@@ -120,19 +137,35 @@ window.switchTab = (tab) => {
   if (el) el.classList.remove('hidden');
 };
 
-window.handleSignup = (event) => {
+window.handleSignup = async (event) => {
   event.preventDefault();
   const name = document.getElementById('signup-name').value.trim();
   const email = document.getElementById('signup-email').value.trim();
   const pass = document.getElementById('signup-pass').value.trim();
   if (!name || !email || !pass) { showToast('Please fill all fields', 'error'); return; }
   if (pass.length < 6) { showToast('Password must be at least 6 characters', 'error'); return; }
-  state.currentUser = { name, email };
-  database.setLocal('currentUser', { name, email });
-  document.getElementById('login-modal').classList.add('hidden');
-  showApp();
-  showToast('Account created! Welcome, ' + name + '!', 'success');
-  refreshDashboard();
+  
+  try {
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password: pass })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      state.currentUser = data.user;
+      database.setLocal('currentUser', data.user);
+      document.getElementById('login-modal').classList.add('hidden');
+      await database.syncFromApi();
+      showApp();
+      showToast('Account created! Welcome, ' + name + '!', 'success');
+      refreshDashboard();
+    } else {
+      showToast(data.error || 'Signup failed', 'error');
+    }
+  } catch (err) {
+    showToast('Network error during signup', 'error');
+  }
 };
 
 window.showLanding = () => {
@@ -226,9 +259,7 @@ window.sendMessage = async () => {
   chatHistory.push({ role: 'user', text: msg });
 
   try {
-    if (!aiService.hasApiKey()) {
-      throw new Error('NO_API_KEY');
-    }
+
     const response = await aiService.chat(msg, chatHistory);
     chatHistory.push({ role: 'assistant', text: response });
 
@@ -248,6 +279,8 @@ window.sendMessage = async () => {
       errorMsg = '🔑 <strong>API key required!</strong> Click the "⚙️ API Key" button above to configure your AI provider in the Platform Integrations menu. <button class="btn-small" onclick="openApiKeyModal()" style="margin-left:8px">Set Up Now</button>';
     } else if (err.message === 'INVALID_API_KEY') {
       errorMsg = '❌ <strong>Invalid API key.</strong> Please check your AI API key in settings. <button class="btn-small" onclick="openApiKeyModal()" style="margin-left:8px">Update Key</button>';
+    } else if (err.message.includes('QUOTA_EXCEEDED')) {
+      errorMsg = '⏳ <strong>Quota Exceeded.</strong> The provided API key has reached its limit. Please configure your own API key in Settings. <button class="btn-small" onclick="openApiKeyModal()" style="margin-left:8px">Update Key</button>';
     }
     chat.innerHTML += `<div class="chat-msg bot-msg"><div class="chat-avatar bot-avatar">🤖</div><div class="chat-bubble bot-bubble error-bubble">${errorMsg}</div></div>`;
   }
@@ -316,7 +349,6 @@ function updateAiSetupBanner() {
 
 // === AI Quick Actions ===
 window.aiGenerateQuiz = () => {
-  if (!aiService.hasApiKey()) { openApiKeyModal(); return; }
   document.getElementById('ai-quiz-modal').classList.remove('hidden');
   document.getElementById('ai-quiz-setup').classList.remove('hidden');
   document.getElementById('ai-quiz-active').classList.add('hidden');
@@ -415,7 +447,6 @@ window.closeAiQuiz = () => {
 let aiInputMode = 'concept';
 
 window.aiExplainConcept = () => {
-  if (!aiService.hasApiKey()) { openApiKeyModal(); return; }
   aiInputMode = 'concept';
   document.getElementById('ai-input-modal-icon').textContent = '💡';
   document.getElementById('ai-input-modal-title').textContent = 'Explain a Concept';
@@ -428,7 +459,6 @@ window.aiExplainConcept = () => {
 };
 
 window.aiStudyPlan = () => {
-  if (!aiService.hasApiKey()) { openApiKeyModal(); return; }
   aiInputMode = 'plan';
   document.getElementById('ai-input-modal-icon').textContent = '🗺️';
   document.getElementById('ai-input-modal-title').textContent = 'Generate Study Plan';
@@ -447,7 +477,6 @@ window.aiStudyPlan = () => {
 };
 
 window.aiProgressSummary = async () => {
-  if (!aiService.hasApiKey()) { openApiKeyModal(); return; }
   // Send directly to chat
   document.getElementById('ai-input-modal').classList.add('hidden');
   showPage('ai');

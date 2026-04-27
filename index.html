@@ -55,7 +55,8 @@
     </div>
     <!-- Login Form -->
     <div id="login-form">
-      <div class="form-group"><label class="form-label">Username / Name</label><input id="login-username" class="form-input" type="text" placeholder="Enter your name" onkeydown="if(event.key==='Enter')handleLogin()"></div>
+      <div class="form-group"><label class="form-label">Email</label><input id="login-email" class="form-input" type="email" placeholder="Enter your email" onkeydown="if(event.key==='Enter')handleLogin()"></div>
+      <div class="form-group"><label class="form-label">Password</label><input id="login-password" class="form-input" type="password" placeholder="Enter your password" onkeydown="if(event.key==='Enter')handleLogin()"></div>
       <button class="btn-full" onclick="handleLogin()">Sign In →</button>
     </div>
     <!-- Signup Form -->
@@ -269,7 +270,11 @@
                 </select>
               </div>
             </div>
-            <button class="btn-primary" style="margin-top:8px" onclick="generatePlan()">🚀 Generate Roadmap</button>
+            <button id="plan-generate-btn" class="btn-primary" style="margin-top:8px" onclick="generatePlan()">🚀 Generate Roadmap</button>
+            <div id="plan-loading" class="hidden" style="text-align:center;padding:16px">
+              <div class="typing-indicator" style="justify-content:center;margin-bottom:12px"><span></span><span></span><span></span></div>
+              <div style="font-size:14px;color:var(--muted)">AI is crafting your personalized roadmap...</div>
+            </div>
           </div>
           <div class="card">
             <div class="card-title">🏗️ Or Choose a Learning Track</div>
