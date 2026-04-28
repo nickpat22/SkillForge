@@ -26,11 +26,9 @@ import { showToast } from './src/frontend/components/uiHelpers.js';
 // Page modules
 import * as dashboardPage from './src/frontend/pages/dashboardPage.js';
 import * as trackerPage from './src/frontend/pages/trackerPage.js';
-import * as assessmentPage from './src/frontend/pages/assessmentPage.js';
-import * as analyticsPage from './src/frontend/pages/analyticsPage.js';
 import * as insightsPage from './src/frontend/pages/insightsPage.js';
-import * as plannerPage from './src/frontend/pages/plannerPage.js';
-import * as modulePage from './src/frontend/pages/modulePage.js';
+import * as qaPage from './src/frontend/pages/qaPage.js';
+import * as profilePage from './src/frontend/pages/profilePage.js';
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
@@ -45,11 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize all page modules
   dashboardPage.init();
   trackerPage.init();
-  assessmentPage.init();
-  analyticsPage.init();
   insightsPage.init();
-  plannerPage.init();
-  modulePage.init();
+  // New pages init on demand (lazy), just register globals
+  window._qaPage = qaPage;
+  window._profilePage = profilePage;
 
   // Set up navigation
   setupNavigation();
@@ -76,18 +73,36 @@ function setupNavigation() {
 }
 
 // Global showPage function
-window.showPage = function(pageId) {
+window.showPage = function(pageId, opts = {}) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const pageEl = document.getElementById('page-' + pageId);
   const navEl = document.getElementById('nav-' + pageId);
   if (pageEl) pageEl.classList.add('active');
   if (navEl) navEl.classList.add('active');
-  // Auto-refresh data when navigating
+  // Update topbar title
+  const titles = { dashboard:'Dashboard', tracker:'Session Tracker',
+    insights:'AI Insights', collaborators:'Collaborators', qa:'Q&A Hub',
+    profile:'My Profile', ai:'AI Assistant' };
+  const titleEl = document.getElementById('topbar-title');
+  if (titleEl && titles[pageId]) titleEl.textContent = titles[pageId];
+  // Auto-refresh / init pages
   if (pageId === 'dashboard') dashboardPage.refreshDashboard();
-  if (pageId === 'analytics') analyticsPage.refreshAnalytics();
   if (pageId === 'insights') insightsPage.refreshInsights();
+  if (pageId === 'qa') { qaPage.init(); }
+  if (pageId === 'profile') { profilePage.init(opts.email); }
 };
+
+async function _updateUnreadBadge() {
+  const user = JSON.parse(localStorage.getItem('sl_currentUser') || 'null');
+  if (!user) return;
+  try {
+    const res = await fetch(`/api/messages/unread?email=${encodeURIComponent(user.email)}`);
+    const data = await res.json();
+    const badge = document.getElementById('nav-unread-badge');
+    if (badge) { badge.textContent = data.unread || ''; badge.style.display = data.unread > 0 ? 'inline-flex' : 'none'; }
+  } catch {}
+}
 
 // Auth functions
 window.handleLogin = async () => {
@@ -159,7 +174,7 @@ window.handleSignup = async (event) => {
       await database.syncFromApi();
       showApp();
       showToast('Account created! Welcome, ' + name + '!', 'success');
-      refreshDashboard();
+      window.refreshDashboard();
     } else {
       showToast(data.error || 'Signup failed', 'error');
     }
@@ -436,7 +451,7 @@ function showAiQuizResult() {
   document.getElementById('ai-quiz-result-msg').textContent = pct >= 80 ? 'Excellent work! You nailed it!' : pct >= 60 ? 'Good job! Keep studying to improve.' : pct >= 40 ? 'Not bad, but review the material for a better score.' : 'Keep practicing! Review the topic and try again.';
 
   // Save to quiz scores
-  database.pushLocal('quiz_scores', { pct, date: new Date().toISOString().split('T')[0], timestamp: new Date().toISOString(), type: 'ai-generated' });
+  database.saveQuizScore({ pct, date: new Date().toISOString().split('T')[0], timestamp: new Date().toISOString(), type: 'ai-generated' });
 }
 
 window.closeAiQuiz = () => {
@@ -539,7 +554,8 @@ window.closeProfileModal = (event) => {
 };
 
 window.toggleLandNav = () => {
-  document.getElementById('land-mobile-menu').classList.toggle('active');
+  const drawer = document.getElementById('land-mobile-drawer');
+  if (drawer) drawer.classList.toggle('hidden');
 };
 
 // Helper to format AI responses (markdown bold → HTML, lists, etc.)

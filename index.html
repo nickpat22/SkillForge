@@ -12,35 +12,243 @@
 
 <!-- ======= LANDING PAGE ======= -->
 <div id="landing-page">
-  <nav class="land-nav">
+
+  <!-- ===== STICKY NAV ===== -->
+  <nav class="land-nav" id="land-nav">
     <div class="land-logo">Skill<span>Forge</span></div>
-    <div class="land-links">
-      <a href="#features">Features</a>
-      <a href="#" onclick="showAuth('login')">Sign In</a>
+    <div class="land-nav-right" style="display:flex;align-items:center;gap:32px;">
+      <div class="land-links" id="land-links">
+        <a href="#home" onclick="showLandingSection('home')" class="land-nav-link active" data-section="section-home">Home</a>
+        <a href="#team" onclick="showLandingSection('team')" class="land-nav-link" data-section="section-team">Team</a>
+        <a href="#about" onclick="showLandingSection('about')" class="land-nav-link" data-section="section-about">About</a>
+        <a href="#contact" onclick="showLandingSection('contact')" class="land-nav-link" data-section="section-contact">Contact</a>
+      </div>
+      <div class="land-ctas">
+        <button class="btn-hero-primary" onclick="showAuth('login')">Log In</button>
+      </div>
     </div>
-    <div class="land-ctas">
-      <button class="btn-hero-secondary" onclick="showAuth('login')">Log In</button>
-      <button class="btn-hero-primary" onclick="showAuth('signup')">Get Started Free</button>
-    </div>
+    <button class="land-hamburger" id="land-hamburger" onclick="toggleLandingMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
-  <div class="hero" id="features">
-    <div class="hero-badge">🚀 Your Personal Learning OS</div>
-    <h1>Study Smarter.<br><span>Track Progress.</span><br>Learn Faster.</h1>
-    <p>SkillForge combines session tracking, quiz assessments, AI insights, and structured roadmaps into one powerful learning platform.</p>
-    <div class="hero-btns">
-      <button class="btn-hero-primary" onclick="showAuth('signup')">Start Learning Free →</button>
-      <button class="btn-hero-secondary" onclick="showAuth('login')">Sign In</button>
+
+  <!-- Mobile Nav Drawer -->
+  <div class="land-mobile-drawer hidden" id="land-mobile-drawer">
+    <a href="#home" class="land-drawer-link" onclick="showLandingSection('home');closeLandingDrawer()">Home</a>
+    <a href="#team" class="land-drawer-link" onclick="showLandingSection('team');closeLandingDrawer()">Team</a>
+    <a href="#about" class="land-drawer-link" onclick="showLandingSection('about');closeLandingDrawer()">About</a>
+    <a href="#contact" class="land-drawer-link" onclick="showLandingSection('contact');closeLandingDrawer()">Contact</a>
+    <div class="land-drawer-ctas">
+      <button class="btn-hero-primary" onclick="showAuth('login');closeLandingDrawer()">Log In</button>
     </div>
   </div>
-  <div class="features-grid">
-    <div class="feature-card"><div class="feature-icon">⏱️</div><h3>Session Tracker</h3><p>Log every study session with focus ratings, time slots, and topic tagging for complete visibility.</p></div>
-    <div class="feature-card"><div class="feature-icon">📊</div><h3>Analytics Engine</h3><p>Visual charts and metrics reveal your peak performance times, consistency trends, and weekly activity.</p></div>
-    <div class="feature-card"><div class="feature-icon">🧠</div><h3>AI Insights</h3><p>Personalized recommendations based on your actual data — not generic advice.</p></div>
-    <div class="feature-card"><div class="feature-icon">🗺️</div><h3>Learning Roadmaps</h3><p>Structured step-by-step ladders for JavaScript, Python, and DSA with module quizzes.</p></div>
-    <div class="feature-card"><div class="feature-icon">📝</div><h3>Knowledge Quizzes</h3><p>Test your understanding with scored assessments that feed directly into your analytics.</p></div>
-    <div class="feature-card"><div class="feature-icon">🤝</div><h3>Collaborators</h3><p>Find study partners with matching goals and complementary skill sets.</p></div>
-  </div>
-  <div class="land-footer">© 2024 SkillForge. Built for serious learners.</div>
+
+  <!-- ===== SECTION: HOME ===== -->
+  <section id="section-home" class="land-section">
+    <div class="hero">
+      <div class="hero-badge">🚀 Your Personal Learning OS</div>
+      <h1>Study Smarter.<br><span>Track Progress.</span><br>Learn Faster.</h1>
+      <p>SkillForge combines session tracking, quiz assessments, AI insights, and structured roadmaps into one powerful learning platform.</p>
+      <div class="hero-btns">
+        <button class="btn-hero-primary" onclick="showAuth('login')">Sign In →</button>
+      </div>
+    </div>
+    <!-- Animated floating cards -->
+    <div class="hero-floating-cards">
+      <div class="hfc hfc-1">⏱️ <span>45 min session logged</span></div>
+      <div class="hfc hfc-2">📈 <span>Score improved +18%</span></div>
+      <div class="hfc hfc-3">🧠 <span>AI insight ready</span></div>
+    </div>
+    <!-- Feature Cards -->
+    <div class="features-grid" id="features">
+      <div class="feature-card"><div class="feature-icon">⏱️</div><h3>Session Tracker</h3><p>Log every study session with focus ratings, time slots, and topic tagging for complete visibility.</p></div>
+      <div class="feature-card"><div class="feature-icon">📊</div><h3>Analytics Engine</h3><p>Visual charts and metrics reveal your peak performance times, consistency trends, and weekly activity.</p></div>
+      <div class="feature-card"><div class="feature-icon">🧠</div><h3>AI Insights</h3><p>Personalized recommendations based on your actual data — not generic advice.</p></div>
+      <div class="feature-card"><div class="feature-icon">🗺️</div><h3>Learning Roadmaps</h3><p>Structured step-by-step ladders for JavaScript, Python, and DSA with module quizzes.</p></div>
+      <div class="feature-card"><div class="feature-icon">📝</div><h3>Knowledge Quizzes</h3><p>Test your understanding with scored assessments that feed directly into your analytics.</p></div>
+      <div class="feature-card"><div class="feature-icon">🤝</div><h3>Collaborators</h3><p>Find study partners with matching goals and complementary skill sets.</p></div>
+    </div>
+  </section>
+
+
+  <!-- ===== SECTION: TEAM ===== -->
+  <section id="section-team" class="land-section">
+    <div class="land-section-inner">
+      <div class="land-section-badge">👥 The Builders</div>
+      <h2 class="land-section-title">Engineering <span>Team</span></h2>
+      <p class="land-section-sub">Hover over each card to reveal technical contributions.</p>
+      <div class="team-grid team-grid-4">
+        <!-- Nikunj Patidar -->
+        <div class="team-card">
+          <div class="team-card-front">
+            <div class="team-avatar" style="background:linear-gradient(135deg,#4338CA,#7C3AED)">NP</div>
+            <div class="team-icon">🏗️</div>
+            <div class="team-name">Nikunj Patidar</div>
+            <div class="team-role">FULL-STACK ARCHITECT</div>
+            <div class="team-specialty">System Design & Integration Ownership</div>
+            <div class="team-tags">
+              <span class="team-tag">React.js</span>
+              <span class="team-tag">REST APIs</span>
+              <span class="team-tag">System Design</span>
+              <span class="team-tag">Agile</span>
+              <span class="team-tag">Deployment</span>
+            </div>
+            <div class="team-hover-hint">Hover to see contributions →</div>
+          </div>
+          <div class="team-card-back">
+            <div class="team-contrib-title">KEY CONTRIBUTIONS</div>
+            <ul class="team-contrib-list">
+              <li>Architected full-stack flow & React structure</li>
+              <li>Designed planner, analytics, and chatbot integrations</li>
+              <li>Managed project timeline and final deployment</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Aniket Bhosale -->
+        <div class="team-card">
+          <div class="team-card-front">
+            <div class="team-avatar" style="background:linear-gradient(135deg,#0891B2,#06B6D4)">AB</div>
+            <div class="team-icon">🎨</div>
+            <div class="team-name">Aniket Bhosale</div>
+            <div class="team-role">FRONTEND ENGINEER & UI/UX DEVELOPER</div>
+            <div class="team-specialty">Complete UI/UX Implementation</div>
+            <div class="team-tags">
+              <span class="team-tag">HTML</span>
+              <span class="team-tag">CSS</span>
+              <span class="team-tag">JavaScript</span>
+              <span class="team-tag">React</span>
+              <span class="team-tag">Chart.js</span>
+            </div>
+            <div class="team-hover-hint">Hover to see contributions →</div>
+          </div>
+          <div class="team-card-back">
+            <div class="team-contrib-title">KEY CONTRIBUTIONS</div>
+            <ul class="team-contrib-list">
+              <li>Built Dashboard, Planner, and Quiz frontends</li>
+              <li>Engineered interactive UI and smooth animations</li>
+              <li>Integrated Chart.js for data visualization</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Nandini Kumari -->
+        <div class="team-card">
+          <div class="team-card-front">
+            <div class="team-avatar" style="background:linear-gradient(135deg,#B45309,#F59E0B)">NK</div>
+            <div class="team-icon">🗄️</div>
+            <div class="team-name">Nandini Kumari</div>
+            <div class="team-role">BACKEND & DATA ENGINEER</div>
+            <div class="team-specialty">Data Handling & Analytics Logic</div>
+            <div class="team-tags">
+              <span class="team-tag">MySQL</span>
+              <span class="team-tag">Data Modelling</span>
+              <span class="team-tag">Analytics</span>
+              <span class="team-tag">localStorage</span>
+              <span class="team-tag">JSON</span>
+            </div>
+            <div class="team-hover-hint">Hover to see contributions →</div>
+          </div>
+          <div class="team-card-back">
+            <div class="team-contrib-title">KEY CONTRIBUTIONS</div>
+            <ul class="team-contrib-list">
+              <li>Designed relational schema & MySQL flow</li>
+              <li>Engineered analytics & performance tracking</li>
+              <li>Implemented JSON storage for persistent data</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Adesh Mahale -->
+        <div class="team-card">
+          <div class="team-card-front">
+            <div class="team-avatar" style="background:linear-gradient(135deg,#059669,#34D399)">AM</div>
+            <div class="team-icon">🤖</div>
+            <div class="team-name">Adesh Mahale</div>
+            <div class="team-role">AI INTEGRATION & TESTING ENGINEER</div>
+            <div class="team-specialty">AI Features & System Validation</div>
+            <div class="team-tags">
+              <span class="team-tag">Gemini AI</span>
+              <span class="team-tag">NLP</span>
+              <span class="team-tag">Unit Testing</span>
+              <span class="team-tag">Debugging</span>
+              <span class="team-tag">Optimization</span>
+            </div>
+            <div class="team-hover-hint">Hover to see contributions →</div>
+          </div>
+          <div class="team-card-back">
+            <div class="team-contrib-title">KEY CONTRIBUTIONS</div>
+            <ul class="team-contrib-list">
+              <li>Integrated Gemini AI for roadmap generation</li>
+              <li>Built NLP chatbot prompt & response system</li>
+              <li>Validated end-to-end performance and logic</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: ABOUT ===== -->
+  <section id="section-about" class="land-section land-section-alt">
+    <div class="land-section-inner">
+      <div class="land-section-badge">ℹ️ Our Story</div>
+      <h2 class="land-section-title">About <span>SkillForge</span></h2>
+      <p class="land-section-sub">Built by students, for students — a platform that takes learning seriously.</p>
+      <div class="about-grid">
+        <div class="about-text-col">
+          <p class="about-p">SkillForge was born out of a simple frustration: existing tools were either too simple to be useful or too complex to actually use. We wanted something that truly understood how students learn — and helped them do it better.</p>
+          <p class="about-p">We combined <strong>session tracking</strong>, <strong>adaptive quizzes</strong>, <strong>AI-generated roadmaps</strong>, and <strong>peer collaboration</strong> into one unified platform. Every feature is backed by data, and every insight is powered by real AI.</p>
+          <p class="about-p">This isn't just another productivity app. It's a complete learning operating system designed for the modern student who wants to study smarter, track progress accurately, and get to their goals faster.</p>
+          <div class="about-values">
+            <div class="about-value"><span class="about-value-icon">🎯</span><div><strong>Data-Driven</strong><br><small>Insights grounded in your real study data</small></div></div>
+            <div class="about-value"><span class="about-value-icon">🤖</span><div><strong>AI-Powered</strong><br><small>Personalized roadmaps and recommendations</small></div></div>
+            <div class="about-value"><span class="about-value-icon">🌐</span><div><strong>Open & Free</strong><br><small>Start for free, no credit card required</small></div></div>
+          </div>
+        </div>
+        <div class="about-stats-col">
+          <div class="about-stat-box"><div class="about-stat-num">6+</div><div class="about-stat-lbl">Core Features</div></div>
+          <div class="about-stat-box"><div class="about-stat-num">3</div><div class="about-stat-lbl">Learning Tracks</div></div>
+          <div class="about-stat-box"><div class="about-stat-num">AI</div><div class="about-stat-lbl">Powered Insights</div></div>
+          <div class="about-stat-box"><div class="about-stat-num">100%</div><div class="about-stat-lbl">Student Built</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: CONTACT ===== -->
+  <section id="section-contact" class="land-section">
+    <div class="land-section-inner" style="max-width:760px">
+      <div class="land-section-badge">📬 Get In Touch</div>
+      <h2 class="land-section-title">Contact <span>Us</span></h2>
+      <p class="land-section-sub">Have a question, suggestion, or just want to say hello? We'd love to hear from you.</p>
+      <form class="contact-form" onsubmit="handleContactSubmit(event)">
+        <div class="contact-row">
+          <div class="form-group">
+            <label class="form-label" style="color:#cbd5e1">Full Name</label>
+            <input class="contact-input" type="text" placeholder="Your name" required id="contact-name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="color:#cbd5e1">Email Address</label>
+            <input class="contact-input" type="email" placeholder="you@email.com" required id="contact-email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="color:#cbd5e1">Subject</label>
+          <input class="contact-input" type="text" placeholder="What's this about?" id="contact-subject">
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="color:#cbd5e1">Message</label>
+          <textarea class="contact-input contact-textarea" placeholder="Write your message here…" required id="contact-message"></textarea>
+        </div>
+        <button type="submit" class="btn-hero-primary" style="width:100%;padding:16px;font-size:16px">Send Message ✉️</button>
+      </form>
+      <div class="contact-socials">
+        <div class="contact-social-item">📧 <span>skillforge.team@email.com</span></div>
+        <div class="contact-social-item">🌐 <span>localhost:8080</span></div>
+        <div class="contact-social-item">💻 <span>Open Source on GitHub</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="land-footer">© 2024 SkillForge. Built for serious learners. · <a href="#section-home" style="color:#818cf8;text-decoration:none">Back to top ↑</a></div>
 </div>
 
 <!-- ======= AUTH MODAL ======= -->
@@ -78,12 +286,10 @@
     <div class="sidebar-nav">
       <button class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span> Dashboard</button>
       <button class="nav-item" id="nav-tracker" onclick="showPage('tracker')"><span class="nav-icon">⏱️</span> Session Tracker</button>
-      <button class="nav-item" id="nav-assessment" onclick="showPage('assessment')"><span class="nav-icon">📝</span> Assessment</button>
-      <button class="nav-item" id="nav-analytics" onclick="showPage('analytics')"><span class="nav-icon">📊</span> Analytics</button>
       <button class="nav-item" id="nav-insights" onclick="showPage('insights')"><span class="nav-icon">🧠</span> AI Insights</button>
-      <button class="nav-item" id="nav-planner" onclick="showPage('planner')"><span class="nav-icon">🗺️</span> Study Planner</button>
-      <button class="nav-item" id="nav-module" onclick="showPage('module')" style="display:none"><span class="nav-icon">📖</span> Module</button>
       <button class="nav-item" id="nav-collaborators" onclick="showPage('collaborators')"><span class="nav-icon">🤝</span> Collaborators</button>
+      <button class="nav-item" id="nav-qa" onclick="showPage('qa')"><span class="nav-icon">💬</span> Q&amp;A Hub</button>
+      <button class="nav-item" id="nav-profile" onclick="showPage('profile')"><span class="nav-icon">👤</span> My Profile</button>
       <button class="nav-item" id="nav-ai" onclick="showPage('ai')"><span class="nav-icon">🤖</span> AI Assistant</button>
     </div>
     <div class="sidebar-footer">
@@ -171,64 +377,7 @@
         <div class="card"><div class="card-title">📋 Session History</div><div id="tracker-sessions-list"></div></div>
       </div>
 
-      <!-- ASSESSMENT PAGE -->
-      <div class="page" id="page-assessment">
-        <div class="section-header">
-          <div><div class="section-title">📝 Knowledge Assessment</div><div class="section-sub">Test your CS fundamentals</div></div>
-          <button class="btn-primary" onclick="startQuiz()">▶ Start Quiz</button>
-        </div>
-        <div class="quiz-wrap">
-          <div id="quiz-active" class="hidden">
-            <div class="quiz-header">
-              <div class="quiz-meta">
-                <span id="quiz-counter">Question 1 of 10</span>
-                <span id="quiz-score-live">Score: 0</span>
-              </div>
-              <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress" style="width:10%"></div></div>
-              <div class="quiz-question-text" id="quiz-question">Loading…</div>
-            </div>
-            <div class="quiz-options" id="quiz-options"></div>
-            <button class="btn-primary btn-next" id="quiz-next-btn" onclick="nextQuestion()" disabled>Next →</button>
-          </div>
-          <div id="quiz-result" class="quiz-result hidden">
-            <div class="result-emoji" id="result-emoji">🏆</div>
-            <div class="result-pct" id="result-pct">0%</div>
-            <div id="result-score" style="display:none"></div>
-            <div class="result-msg" id="result-sub">Great work!</div>
-            <div class="result-stats">
-              <div class="result-stat"><div class="result-stat-val" style="color:var(--success)" id="result-correct">0</div><div class="result-stat-lbl">✅ Correct</div></div>
-              <div class="result-stat"><div class="result-stat-val" style="color:var(--danger)" id="result-wrong">0</div><div class="result-stat-lbl">❌ Wrong</div></div>
-            </div>
-            <div class="result-btns">
-              <button class="btn-secondary" onclick="retakeQuiz()">🔄 Retake</button>
-              <button class="btn-primary" onclick="saveQuizScore()">💾 Save Score</button>
-            </div>
-          </div>
-          <div class="card" style="margin-top:20px">
-            <div class="card-title">ℹ️ About This Assessment</div>
-            <p style="font-size:14px;color:var(--muted);line-height:1.7">10 questions covering Data Structures, Algorithms, OOP, Networking, and CS fundamentals. Your score feeds directly into your Analytics and AI Insights.</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- ANALYTICS PAGE -->
-      <div class="page" id="page-analytics">
-        <div class="section-header">
-          <div><div class="section-title">📊 Analytics</div><div class="section-sub">Deep dive into your study data</div></div>
-          <button class="btn-primary" onclick="refreshAnalytics()">🔄 Refresh</button>
-        </div>
-        <div class="analytics-grid">
-          <div class="an-stat"><div class="an-stat-label">Best Time Slot</div><div class="an-stat-value" id="an-best-time">—</div></div>
-          <div class="an-stat"><div class="an-stat-label">Avg Effectiveness</div><div class="an-stat-value" id="an-avg-eff">—</div></div>
-          <div class="an-stat"><div class="an-stat-label">Consistency</div><div class="an-stat-value" id="an-consistency">0%</div></div>
-          <div class="an-stat"><div class="an-stat-label">Score Trend</div><div class="an-stat-value" id="an-improvement">—</div></div>
-        </div>
-        <div class="charts-row">
-          <div class="chart-card"><div class="chart-title">⚡ Effectiveness by Slot</div><canvas id="an-slot-chart" height="120"></canvas></div>
-          <div class="chart-card"><div class="chart-title">📅 Weekly Sessions</div><canvas id="an-weekly-chart" height="120"></canvas></div>
-        </div>
-        <div class="chart-card"><div class="chart-title">📈 Quiz Score Trend</div><canvas id="an-score-chart" height="100"></canvas></div>
-      </div>
 
       <!-- INSIGHTS PAGE -->
       <div class="page" id="page-insights">
@@ -248,91 +397,7 @@
         </div>
       </div>
 
-      <!-- PLANNER PAGE -->
-      <div class="page" id="page-planner">
-        <div class="section-title" style="margin-bottom:20px">🗺️ Study Planner</div>
 
-        <!-- Step 1: Generate Plan or Choose Track -->
-        <div id="planner-step-1">
-          <div class="card" style="margin-bottom:20px">
-            <div class="card-title">🎯 Generate a Learning Roadmap</div>
-            <div class="session-form">
-              <div class="form-group"><label class="form-label">Learning Topic</label><input id="plan-topic" class="form-input" type="text" placeholder="e.g. JavaScript, Machine Learning"></div>
-              <div class="form-group"><label class="form-label">Hours per Week</label><input id="plan-hours" class="form-input" type="number" min="1" max="40" value="10"></div>
-              <div class="form-group" style="grid-column:1/-1"><label class="form-label">Learning Goal</label>
-                <select id="plan-goal" class="form-input">
-                  <option value="">— Select a goal —</option>
-                  <option>Interview Prep</option>
-                  <option>Project Building</option>
-                  <option>Exam Preparation</option>
-                  <option>Career Switch</option>
-                  <option>Skill Enhancement</option>
-                </select>
-              </div>
-            </div>
-            <button id="plan-generate-btn" class="btn-primary" style="margin-top:8px" onclick="generatePlan()">🚀 Generate Roadmap</button>
-            <div id="plan-loading" class="hidden" style="text-align:center;padding:16px">
-              <div class="typing-indicator" style="justify-content:center;margin-bottom:12px"><span></span><span></span><span></span></div>
-              <div style="font-size:14px;color:var(--muted)">AI is crafting your personalized roadmap...</div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-title">🏗️ Or Choose a Learning Track</div>
-            <div class="track-grid">
-              <div class="track-card" onclick="selectTrack('js')"><div class="track-icon">⚡</div><div class="track-name">JavaScript</div><div class="track-desc">Web & fullstack</div></div>
-              <div class="track-card" onclick="selectTrack('python')"><div class="track-icon">🐍</div><div class="track-name">Python</div><div class="track-desc">Scripting & ML</div></div>
-              <div class="track-card" onclick="selectTrack('dsa')"><div class="track-icon">🌲</div><div class="track-name">DSA</div><div class="track-desc">Algorithms & structures</div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 2: Roadmap Result -->
-        <div id="planner-step-2" class="hidden">
-          <div class="card">
-            <button class="module-back" onclick="document.getElementById('planner-step-1').classList.remove('hidden');document.getElementById('planner-step-2').classList.add('hidden')">← Back</button>
-            <div class="card-title" id="plan-roadmap-title">Your Learning Roadmap</div>
-            <div style="font-size:13px;color:var(--muted);margin-bottom:20px" id="plan-roadmap-meta"></div>
-            <div id="plan-roadmap-phases"></div>
-            <button class="btn-primary" style="margin-top:16px" onclick="startLearningJourney()">🚀 Start Learning Journey →</button>
-          </div>
-        </div>
-
-        <!-- Step 3: Ladder View -->
-        <div id="planner-step-3" class="hidden">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-            <button class="module-back" onclick="document.getElementById('planner-step-1').classList.remove('hidden');document.getElementById('planner-step-3').classList.add('hidden')">← All Tracks</button>
-            <div class="section-title" id="ladder-track-title">JavaScript</div>
-          </div>
-          <div class="card" style="margin-bottom:16px">
-            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>Progress</span><span id="ladder-progress-label">0/0 completed</span></div>
-            <div class="progress-bar-wrap"><div class="progress-bar-fill" id="ladder-progress-fill" style="width:0%"></div></div>
-          </div>
-          <div id="ladder-steps-container"></div>
-        </div>
-      </div>
-
-      <!-- MODULE PAGE -->
-      <div class="page" id="page-module">
-        <button class="module-back" onclick="backToLadder()">← Back to Ladder</button>
-        <div class="module-header">
-          <div class="module-title" id="module-title">Module</div>
-          <div class="module-subtitle" id="module-subtitle"></div>
-        </div>
-        <div class="module-row">
-          <div>
-            <div class="card"><div class="card-title">🎬 Video Lesson</div><div id="module-videos"></div></div>
-            <div class="card"><div class="card-title">📖 Content</div><div class="module-content" id="module-content"></div></div>
-          </div>
-          <div>
-            <div class="card"><div class="card-title">📅 Day Tracker</div><div id="module-days" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px"></div></div>
-            <div class="card"><div class="card-title">🧭 Learning Guide</div><div id="learning-guide"></div></div>
-            <div class="card" style="text-align:center">
-              <div style="font-size:14px;color:var(--muted);margin-bottom:12px">Ready to test your knowledge?</div>
-              <button class="btn-primary" style="width:100%" onclick="openModuleQuiz()">🧠 Take Module Quiz</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- COLLABORATORS PAGE -->
       <div class="page" id="page-collaborators">
@@ -353,12 +418,12 @@
           </select>
         </div>
         <div class="collab-grid">
-          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:#2563EB">AS</div><div><div class="collab-name">Aanya Sharma</div><div class="collab-goal">🎯 Interview Prep</div></div></div><div class="collab-skills"><span class="skill-chip">JavaScript</span><span class="skill-chip">Data Structures</span><span class="skill-chip">Algorithms</span></div><div class="collab-meta">⏰ 10h/week &nbsp;·&nbsp; 🔥 High Consistency &nbsp;·&nbsp; 📈 +22%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
-          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:#7C3AED">RM</div><div><div class="collab-name">Rohan Mehta</div><div class="collab-goal">🎯 Project Building</div></div></div><div class="collab-skills"><span class="skill-chip">Python</span><span class="skill-chip">Machine Learning</span><span class="skill-chip">Data Science</span></div><div class="collab-meta">⏰ 15h/week &nbsp;·&nbsp; 🔥 High Consistency &nbsp;·&nbsp; 📈 +18%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
-          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:#0891B2">PN</div><div><div class="collab-name">Priya Nair</div><div class="collab-goal">🎯 Exam Preparation</div></div></div><div class="collab-skills"><span class="skill-chip">Web Development</span><span class="skill-chip">JavaScript</span><span class="skill-chip">CSS</span></div><div class="collab-meta">⏰ 8h/week &nbsp;·&nbsp; 🟡 Medium Consistency &nbsp;·&nbsp; 📈 +10%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
-          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:#10B981">KS</div><div><div class="collab-name">Karan Singh</div><div class="collab-goal">🎯 Interview Prep</div></div></div><div class="collab-skills"><span class="skill-chip">Algorithms</span><span class="skill-chip">Data Structures</span><span class="skill-chip">Python</span></div><div class="collab-meta">⏰ 20h/week &nbsp;·&nbsp; 🔥 High Consistency &nbsp;·&nbsp; 📈 +30%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
-          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:#F59E0B">SP</div><div><div class="collab-name">Sneha Patel</div><div class="collab-goal">🎯 Career Switch</div></div></div><div class="collab-skills"><span class="skill-chip">Machine Learning</span><span class="skill-chip">Python</span><span class="skill-chip">Statistics</span></div><div class="collab-meta">⏰ 12h/week &nbsp;·&nbsp; 🟡 Medium Consistency &nbsp;·&nbsp; 📈 +15%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
-          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:#EF4444">AK</div><div><div class="collab-name">Arjun Kumar</div><div class="collab-goal">🎯 Project Building</div></div></div><div class="collab-skills"><span class="skill-chip">Web Development</span><span class="skill-chip">JavaScript</span><span class="skill-chip">Data Structures</span></div><div class="collab-meta">⏰ 6h/week &nbsp;·&nbsp; 🔴 Low Consistency &nbsp;·&nbsp; 📈 +5%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
+          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:linear-gradient(135deg,#4338ca,#7c3aed)">AS</div><div><div class="collab-name">Aanya Sharma</div><div class="collab-goal">🎯 Interview Prep</div></div></div><div class="collab-skills"><span class="skill-chip">JavaScript</span><span class="skill-chip">Data Structures</span><span class="skill-chip">Algorithms</span></div><div class="collab-meta">⏰ 10h/week &nbsp;·&nbsp; 🔥 High Consistency &nbsp;·&nbsp; 📈 +22%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
+          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:linear-gradient(135deg,#c084fc,#9333ea)">RM</div><div><div class="collab-name">Rohan Mehta</div><div class="collab-goal">🎯 Project Building</div></div></div><div class="collab-skills"><span class="skill-chip">Python</span><span class="skill-chip">Machine Learning</span><span class="skill-chip">Data Science</span></div><div class="collab-meta">⏰ 15h/week &nbsp;·&nbsp; 🔥 High Consistency &nbsp;·&nbsp; 📈 +18%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
+          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:linear-gradient(135deg,#22d3ee,#3b82f6)">PN</div><div><div class="collab-name">Priya Nair</div><div class="collab-goal">🎯 Exam Preparation</div></div></div><div class="collab-skills"><span class="skill-chip">Web Development</span><span class="skill-chip">JavaScript</span><span class="skill-chip">CSS</span></div><div class="collab-meta">⏰ 8h/week &nbsp;·&nbsp; 🟡 Medium Consistency &nbsp;·&nbsp; 📈 +10%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
+          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:linear-gradient(135deg,#34d399,#059669)">KS</div><div><div class="collab-name">Karan Singh</div><div class="collab-goal">🎯 Interview Prep</div></div></div><div class="collab-skills"><span class="skill-chip">Algorithms</span><span class="skill-chip">Data Structures</span><span class="skill-chip">Python</span></div><div class="collab-meta">⏰ 20h/week &nbsp;·&nbsp; 🔥 High Consistency &nbsp;·&nbsp; 📈 +30%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
+          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:linear-gradient(135deg,#fbbf24,#ea580c)">SP</div><div><div class="collab-name">Sneha Patel</div><div class="collab-goal">🎯 Career Switch</div></div></div><div class="collab-skills"><span class="skill-chip">Machine Learning</span><span class="skill-chip">Python</span><span class="skill-chip">Statistics</span></div><div class="collab-meta">⏰ 12h/week &nbsp;·&nbsp; 🟡 Medium Consistency &nbsp;·&nbsp; 📈 +15%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
+          <div class="collab-card"><div class="collab-header"><div class="collab-avatar" style="background:linear-gradient(135deg,#f87171,#dc2626)">AK</div><div><div class="collab-name">Arjun Kumar</div><div class="collab-goal">🎯 Project Building</div></div></div><div class="collab-skills"><span class="skill-chip">Web Development</span><span class="skill-chip">JavaScript</span><span class="skill-chip">Data Structures</span></div><div class="collab-meta">⏰ 6h/week &nbsp;·&nbsp; 🔴 Low Consistency &nbsp;·&nbsp; 📈 +5%</div><div class="collab-actions"><button class="btn-primary" style="flex:1">Connect</button><button class="btn-secondary">Profile</button></div></div>
         </div>
       </div>
 
@@ -428,6 +493,14 @@
           </div>
         </div>
       </div>
+
+      <!-- Q&A HUB PAGE -->
+      <div class="page" id="page-qa"></div>
+
+
+
+      <!-- PROFILE PAGE -->
+      <div class="page" id="page-profile"></div>
 
     </main>
     
@@ -615,5 +688,81 @@
     }
   })();
 </script>
+
+<script>
+  // =====================================================
+  // LANDING PAGE — Single Page Sections
+  // =====================================================
+
+  function showLandingSection(sectionId) {
+    // Hide all sections
+    const sections = ['section-home', 'section-team', 'section-about', 'section-contact'];
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    
+    // Show active section
+    const target = document.getElementById('section-' + sectionId);
+    if (target) {
+      target.style.display = 'block';
+    }
+
+    // Update nav links
+    document.querySelectorAll('.land-nav-link, .land-drawer-link').forEach(link => {
+      const isMatch = link.getAttribute('data-section') === 'section-' + sectionId;
+      if (isMatch) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    window.scrollTo(0, 0);
+  }
+
+  // Initialize first section
+  window.addEventListener('DOMContentLoaded', () => {
+    // Check URL hash if one exists to link directly to a page
+    const hash = window.location.hash.replace('#', '');
+    if (['home', 'team', 'about', 'contact'].includes(hash)) {
+      showLandingSection(hash);
+    } else {
+      showLandingSection('home');
+    }
+  });
+
+  // Mobile hamburger menu toggle
+  function toggleLandingMobileMenu() {
+    const drawer = document.getElementById('land-mobile-drawer');
+    if (drawer) drawer.classList.toggle('hidden');
+  }
+  function closeLandingDrawer() {
+    const drawer = document.getElementById('land-mobile-drawer');
+    if (drawer) drawer.classList.add('hidden');
+  }
+
+  // Contact form submit handler
+  function handleContactSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    if (!name || !email) return;
+    // Show success toast using existing toast system
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.textContent = `✅ Thanks ${name}! We'll get back to you at ${email} soon.`;
+      toast.className = 'toast toast-success show';
+      setTimeout(() => { toast.className = 'toast hidden'; }, 4000);
+    }
+    e.target.reset();
+  }
+
+  // Close drawer when resizing to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeLandingDrawer();
+  });
+</script>
 </body>
+<script src="/socket.io/socket.io.js" onerror="console.log('Socket.IO not available')"></script>
 </html>

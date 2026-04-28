@@ -39,9 +39,9 @@ export function refreshDashboard() {
   // Charts
   const weekly = getWeeklyMinutes(sessions);
   setTimeout(() => {
-    makeBarChart('dash-activity-chart', weekly.labels, weekly.counts, '#2563EB', 'Minutes');
+    makeBarChart('dash-activity-chart', weekly.labels, weekly.counts, '#818cf8', 'Minutes');
     const slotEff = analyticsService.getSlotEffectiveness(sessions);
-    makeBarChart('dash-slot-chart', Object.keys(slotEff), Object.values(slotEff).map(v => +v.toFixed(4)), '#0891B2', 'Effectiveness');
+    makeBarChart('dash-slot-chart', Object.keys(slotEff), Object.values(slotEff).map(v => +v.toFixed(4)), '#c084fc', 'Effectiveness');
   }, 50);
   renderSessionsList('dash-sessions-list', sessions);
 }
