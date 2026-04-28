@@ -1,33 +1,64 @@
-🚀 SkillForge — Smart Learning Platform
+# SkillForge - AI-Powered Smart Learning Platform
 
-SkillForge is a modern web-based learning platform designed to help students track their study sessions, analyze performance, and improve learning efficiency using data-driven insights.
+A full-stack learning management system with AI-powered insights, quiz generation, and collaborative features.
 
-✨ Features
-⏱️ Study Session Tracker
-📊 Analytics Dashboard
-🧠 AI-Based Insights
-📝 Quiz Assessment System
-🗺️ Learning Roadmaps
-🤝 Collaborator Suggestions
+## Project Structure
 
-🛠️ Tech Stack
-HTML, CSS, JavaScript
-Modular JavaScript Architecture
-LocalStorage (Temporary Database)
-Chart.js (Data Visualization)
-🚀 How to Run
+```
+YASH/
+├── frontend/          # Vite React frontend (Vercel deployable)
+│   ├── src/
+│   │   ├── pages/    # Dashboard, Tracker, Insights, Profile
+│   │   ├── App.jsx   # Main app with routing
+│   │   └── index.css # Global styles
+│   ├── index.html    # Vite entry point
+│   ├── vite.config.js
+│   └── package.json
+│
+├── backend/           # Express API (Render deployable)
+│   ├── server.js     # Main server entry
+│   ├── routes/       # API endpoints
+│   ├── services/     # Business logic
+│   ├── db/           # Database connection
+│   ├── .env          # Environment variables
+│   └── package.json
+│
+├── vercel.json       # Vercel configuration
+└── index.html       # Root redirect
+```
 
-Clone the repository:
+## Quick Start
 
-git clone https://github.com/Nandini-824/SkillForge.git
-Open project folder
-Run using Live Server in VS Code
+### Frontend (Development)
 
-📌 Future Improvements
-Firebase Integration (Authentication + Database)
-AI Recommendation Engine
-Deployment with Hosting
-👩‍💻 Author
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Backend (Development)
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+## Deployment
+
+### Frontend → Vercel
+1. Push to GitHub → Import to Vercel → Framework: Vite → Build: `npm run build` → Output: `dist`
+
+### Backend → Render
+1. Push to GitHub → Create Web Service → Build: `npm install` → Start: `npm start` → Add env vars
+
+## Tech Stack
+
+- **Frontend**: React 18, Vite, React Router
+- **Backend**: Express 5, Socket.IO, MySQL
+- **AI**: Google Gemini API
+- **Deployment**: Vercel (frontend), Render (backend)
 
 Nandini Singh
 B.Tech CSE Student
